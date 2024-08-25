@@ -1,0 +1,10 @@
+---
+- name: install mysql
+  hosts: all
+  roles:
+    - role: geerlingguy.mysql
+      beome: yes
+      vars:
+      mysql_user_home: /root
+      mysql_user_name: root
+      mysql_user_password: root

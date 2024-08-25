@@ -1,0 +1,13 @@
+---
+-name: install git and clone remote repository
+ become: true
+ tasks:
+   - name: install git
+     apt: 
+       name: git
+       state: present 
+       update_cashe: yes
+   - name: clone remote git repository
+     git:
+       repo: https://github.com/Primus-Learning/ansible-jan-2024.git   
+       dest: /home/ubuntu/newgit

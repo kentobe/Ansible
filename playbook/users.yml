@@ -1,0 +1,46 @@
+---
+- name: create user account and the password to home directory
+  hosts: all
+  tasks: 
+    - name: "{{ username }}"
+      user:
+        name: shu
+        password:  "{{ password }}"
+        uid: 6679
+        home: /home/"{{ username }}"
+      become: true
+    - name: copy password into users home directory
+      become: true
+      copy:
+        src: /etc/passwd
+        dest: /home/"{{ username }}"  
+
+
+
+        ansible-playbook user.yml -i inevtory.yaml --extra-vars
+     
+
+    
+ ---
+- name: create user account and the password to home directory
+  hosts: all
+  tasks:
+    - name: create user
+      user:
+        name: "{{ username }}"
+        password: "{{ password }}"
+        uid: 6679
+        home: "/home/{{ username }}"
+      become: true
+    - name: copy password into users home directory
+      become: true
+      copy:
+        src: /etc/passwd
+        dest: "/home/{{ username }}"
+
+        ansible-playbook user.yml -i inventory.yaml --ext
+
+   
+
+   
+     

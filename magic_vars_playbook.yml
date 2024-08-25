@@ -1,0 +1,7 @@
+--- 
+- name: playbook to understand magic vars
+  hosts: all
+  tasks:
+    - name: extract fact
+      dubug: 
+      msg: "{{ hostvars[app1].ansible_facts }}"

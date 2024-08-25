@@ -1,0 +1,35 @@
+--- 
+- name: install nginx webserver
+  hosts: all
+  vars:
+    package: nginx
+  tasks:
+    - name: "installing {{ package }}" 
+      apt: 
+        name: "{{ package }}" 
+        state: present
+
+ - name: creating user account
+   host: all
+   vars: 
+     users: 
+       - name: "vic"   
+         uid: 6746
+         password: "vicpass"
+       - name: "tobe"
+         uid: 7446
+         password: "tobepass"
+       - name: "gilbert"
+         uid : "9985"
+         password: "gilbertpass" 
+    tasks: 
+      - name: "create user {{ item.name }}"
+        become: true
+        user:
+          name: "{{ item.name }}"
+          password: "{{ item.nmae }}"
+          uid: "{{ item.name }}"
+          home: "/home?{{ item.name }}"
+        loop: "{{ users}}"  
+         
+ 

@@ -1,0 +1,46 @@
+users: 
+       - name: "vic"   
+         uid: 6746
+         password: "vicpass"
+       - name: "tobe"
+         uid: 7446
+         password: "tobepass"
+       - name: "gilbert"
+         uid : "9985"
+         password: "gilbertpass" 
+
+package: nginx  
+
+
+
+
+
+
+---
+- name: Create a user on the servers
+  hosts: all
+  become: yes
+  vars:
+    username: newuser
+    user_password: "{{ 'password' | password_hash('sha512') }}"
+  tasks:
+    - name: Ensure the user exists
+      ansible.builtin.user:
+        name: "{{ username }}"
+        password: "{{ user_password }}"
+        
+        state: present
+
+    - name: Ensure the user has a home directory
+      ansible.builtin.file:
+        path: "/home/{{ username }}"
+        state: directory
+        owner: "{{ username }}"
+        group: "{{ username }}"
+        uid: '0755'
+
+    - name: Add the user to the sudoers group
+      ansible.builtin.user:
+        name: "{{ username }}"
+        groups: sudo
+        append: yes
